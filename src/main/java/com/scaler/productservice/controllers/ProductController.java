@@ -18,6 +18,7 @@ public class ProductController {
     private ProductService productService;
 
     public ProductController(ProductService productService){
+
         this.productService = productService;
     }
 
@@ -31,8 +32,7 @@ public class ProductController {
     //1. Get a Product--localhost::8080/products/22
     @GetMapping("/{productId}")
     public Product getProduct(@PathVariable("productId") long productId){
-
-        return null;
+        return productService.getProductById(productId);
     }
 
     //2. Get all products --localhost::8080/products
