@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import static com.scaler.productservice.dtos.FakeStoreProductDto.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,14 +22,21 @@ public class FakeStoreProductService implements  ProductService {
        ResponseEntity<FakeStoreProductDto> responseEntity =
                restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/"+productId,
-                FakeStoreProductDto.class
-        );
-        return convertFakeStoreDtoToProduct(responseEntity.getBody());
+                FakeStoreProductDto.class);
+        return getProductFrom(responseEntity.getBody());
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+        ResponseEntity<FakeStoreProductDto[]> responseEntity =
+                restTemplate.getForEntity
+                ("https://fakestoreapi.com/products",
+                FakeStoreProductDto[].class);
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto : responseEntity.getBody()){
+            products.add(getProductFrom(fakeStoreProductDto));
+        }
+        return products;
     }
 
     @Override
@@ -43,23 +52,5 @@ public class FakeStoreProductService implements  ProductService {
     @Override
     public void deleteProduct(long productId) {
 
-    }
-
-    private Product convertFakeStoreDtoToProduct(FakeStoreProductDto fakeStoreProductDto){
-        if(fakeStoreProductDto != null){
-            Product product = new Product();
-            product.setId(fakeStoreProductDto.getId());
-            product.setTitle(fakeStoreProductDto.getTitle());
-            product.setPrice(fakeStoreProductDto.getPrice());
-            product.setDescription(fakeStoreProductDto.getDescription());
-            product.setImageUrl(fakeStoreProductDto.getImageUrl());
-
-            Category category = new Category();
-            category.setTitle(fakeStoreProductDto.getCategory());
-
-            product.setCategory(category);
-            return product;
-        }
-        return null;
     }
 }
