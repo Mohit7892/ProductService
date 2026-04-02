@@ -1,6 +1,7 @@
 package com.scaler.productservice.services;
 
 import com.scaler.productservice.dtos.FakeStoreProductDto;
+import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,17 @@ public class FakeStoreProductService implements  ProductService {
     private RestTemplate restTemplate;
 
     @Override
-    public Product getProductById(long productId) {
+    public Product getProductById(long productId) throws ProductNotFoundException {
        ResponseEntity<FakeStoreProductDto> responseEntity =
                restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/"+productId,
                 FakeStoreProductDto.class);
-        return getProductFrom(responseEntity.getBody());
+       FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+       if(fakeStoreProductDto == null){
+           throw new ProductNotFoundException("The product id pass is invalid",
+                   productId);
+       }
+        return getProductFrom(fakeStoreProductDto);
     }
 
     @Override
