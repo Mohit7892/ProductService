@@ -1,6 +1,8 @@
 package com.scaler.productservice.controlleradvices;
 
+import com.scaler.productservice.dtos.BadCreateProductRequestExceptionDto;
 import com.scaler.productservice.dtos.ProductNotFoundExceptionDto;
+import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,13 @@ public class ControllerAdvice {
 
         return new ResponseEntity<>(
                 dto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadCreateProductRequestException.class)
+    private ResponseEntity<BadCreateProductRequestExceptionDto> handleBadCreateProductRequest(BadCreateProductRequestException e){
+        BadCreateProductRequestExceptionDto dto = new BadCreateProductRequestExceptionDto();
+        dto.setMessage(e.getMessage());
+        return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
     }
 
     //we can add multiple exception handlers which are common across controllers

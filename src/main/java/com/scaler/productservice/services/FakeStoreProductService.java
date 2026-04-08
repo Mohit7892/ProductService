@@ -1,6 +1,8 @@
 package com.scaler.productservice.services;
 
+import com.scaler.productservice.dtos.CreateProductRequestDto;
 import com.scaler.productservice.dtos.FakeStoreProductDto;
+import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
@@ -46,8 +48,23 @@ public class FakeStoreProductService implements  ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    public Product createProduct(CreateProductRequestDto createProductRequestDto) throws BadCreateProductRequestException {
+        //we communicate to FS API via FakeStoreProductDto.
+        FakeStoreProductDto createProductDto = new FakeStoreProductDto();
+        createProductDto.setTitle(createProductRequestDto.getTitle());
+        createProductDto.setPrice(createProductRequestDto.getPrice());
+        createProductDto.setDescription(createProductRequestDto.getDescription());
+        createProductDto.setImageUrl(createProductRequestDto.getImageUrl());
+        createProductDto.setCategory(createProductDto.getCategory());
+
+        //call the api
+        ResponseEntity<FakeStoreProductDto> responseEntity =
+                restTemplate.postForEntity("https://fakestoreapi.com/products",
+                createProductDto,FakeStoreProductDto.class);
+        FakeStoreProductDto fakeStoreProductDto = responseEntity.getBody();
+        if(fakeStoreProductDto == null)
+            throw new BadCreateProductRequestException("Request body is invalid!!");
+        return getProductFrom(fakeStoreProductDto);
     }
 
     @Override

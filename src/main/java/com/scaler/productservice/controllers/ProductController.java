@@ -1,6 +1,8 @@
 package com.scaler.productservice.controllers;
 
+import com.scaler.productservice.dtos.CreateProductRequestDto;
 import com.scaler.productservice.dtos.ProductNotFoundExceptionDto;
+import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
@@ -29,7 +31,7 @@ public class ProductController {
     }
 
     //Implement Get product Apis
-    //1. Get a Product--localhost::8080/products/22
+    //1. Get a Product--localhost::8080/products/2
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProduct(@PathVariable("productId") long productId) throws ProductNotFoundException {
         if(productId <= 0){
@@ -46,7 +48,13 @@ public class ProductController {
     public List<Product> getAllProducts()
     {
         return productService.getAllProducts();
+    }
 
+    @PostMapping("")
+    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequestDto createProductRequestDto) throws BadCreateProductRequestException {
+       //Handle the exception or throw it as it is
+        Product product = productService.createProduct(createProductRequestDto);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
 /*    @ExceptionHandler(ProductNotFoundException.class)
