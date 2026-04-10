@@ -6,6 +6,7 @@ import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,16 +18,16 @@ import java.util.List;
 public class ProductController {
 
     //@Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("storageProductService")
+                             ProductService productService){
         this.productService = productService;
     }
 
     //localhost::8080/products/getWelcomeMsg ---> ProductController -> getWelcomeMsg()
     @GetMapping("/getWelcomeMsg")
     public String getWelcomeMsg(){
-
         return "Welcome to sprint boot web project";
     }
 
@@ -66,4 +67,16 @@ public class ProductController {
         return new ResponseEntity<>(
                 dto,HttpStatus.NOT_FOUND);
     }*/
+
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("productId") long productId,
+                                                 @RequestBody Product product){
+        Product updatedProduct = productService.updateProduct(productId,product);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{productId}")
+    public boolean deleteProduct(@PathVariable("productId") long productId) {
+       return productService.deleteProduct(productId);
+    }
 }

@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Override
-    Optional<Category> findById(Long aLong);
+    Optional<Category> findById(Long id);
 }

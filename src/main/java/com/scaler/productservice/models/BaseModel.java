@@ -18,4 +18,5 @@ public class BaseModel {
     private long Id;
     private Date createdAt;
     private Date lastUpdatedAt;
+    private State state;
 }

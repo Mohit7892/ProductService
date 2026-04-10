@@ -13,5 +13,5 @@ public interface ProductService {
     List<Product> getAllProducts();
     Product createProduct(CreateProductRequestDto createProductRequestDto) throws BadCreateProductRequestException;
     Product updateProduct(long productId, Product product);
-    void deleteProduct(long productId);
+    boolean deleteProduct(long productId);
 }

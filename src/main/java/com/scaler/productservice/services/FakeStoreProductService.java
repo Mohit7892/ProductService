@@ -4,7 +4,6 @@ import com.scaler.productservice.dtos.CreateProductRequestDto;
 import com.scaler.productservice.dtos.FakeStoreProductDto;
 import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
-import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import static com.scaler.productservice.dtos.FakeStoreProductDto.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements  ProductService {
     @Autowired
     private RestTemplate restTemplate;
@@ -73,7 +72,7 @@ public class FakeStoreProductService implements  ProductService {
     }
 
     @Override
-    public void deleteProduct(long productId) {
-
+    public boolean deleteProduct(long productId) {
+        return false;
     }
 }
