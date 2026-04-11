@@ -20,5 +20,6 @@ public class Product extends BaseModel {
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
     private Category category;
 }
