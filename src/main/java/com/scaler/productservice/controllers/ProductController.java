@@ -44,7 +44,7 @@ public class ProductController {
         return new ResponseEntity<>(product,HttpStatus.OK);
     }
 
-    //2. Get all products --localhost::8080/products
+    //2. Get all products --localhost::8080/products/
     @GetMapping("")
     public List<Product> getAllProducts()
     {
