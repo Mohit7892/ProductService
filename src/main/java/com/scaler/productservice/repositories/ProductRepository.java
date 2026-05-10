@@ -1,6 +1,8 @@
 package com.scaler.productservice.repositories;
 
 import com.scaler.productservice.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -26,4 +28,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //the way you can write a HQL directly
     @Query("select p.title from products p order by p.Id desc")
     List<String> findTitleByOrderByIdDesc();
+
+    //Native SQL query
+    @Query(value = "SELECT * from products p where p.price >= ?1 and p.price <= ?2", nativeQuery = true)
+    List<Product> findProductByPriceBetweenNative(Double minPrice, Double maxPrice);
+
+    //search with pagination
+    Page<Product> findByTitle(String title, Pageable pageable);
 }
