@@ -95,7 +95,7 @@ public class StorageProductService implements ProductService {
         if (optionalProduct.isPresent()){
             //call user service api to get userdto by userid
             ResponseEntity<UserDto> responseEntity = restTemplate.getForEntity(
-                    "http://userservice/users/userId",
+                    "http://userservice/users/"+userId,
                     UserDto.class,userId
             );
 

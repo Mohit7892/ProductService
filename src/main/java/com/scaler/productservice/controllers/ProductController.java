@@ -82,8 +82,9 @@ public class ProductController {
 
     @GetMapping("/{productId}/{userId}")
     public ResponseEntity<Product> getProductByUserRole(
-            @PathVariable Long productId, @PathVariable Long userId) {
+            @PathVariable Long productId, @PathVariable Long userId) throws ProductNotFoundException {
+            Product product = productService.getProductByUserRole(productId, userId);
 
-        return null;
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 }
