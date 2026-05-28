@@ -13,6 +13,7 @@ import static com.scaler.productservice.dtos.FakeStoreProductDto.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service("fakeStoreProductService")
 public class FakeStoreProductService implements  ProductService {
@@ -74,5 +75,11 @@ public class FakeStoreProductService implements  ProductService {
     @Override
     public boolean deleteProduct(long productId) {
         return false;
+    }
+
+    @Override
+    public Product getProductByUserRole(Long productId, Long userId) {
+
+        return null;
     }
 }

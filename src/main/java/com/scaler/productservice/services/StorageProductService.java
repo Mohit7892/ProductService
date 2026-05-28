@@ -1,13 +1,17 @@
 package com.scaler.productservice.services;
 
 import com.scaler.productservice.dtos.CreateProductRequestDto;
+import com.scaler.productservice.dtos.UserDto;
 import com.scaler.productservice.exceptions.BadCreateProductRequestException;
 import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Category;
 import com.scaler.productservice.models.Product;
 import com.scaler.productservice.models.State;
 import com.scaler.productservice.repositories.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +26,9 @@ public class StorageProductService implements ProductService {
     public StorageProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public Product getProductById(long productId) {
@@ -80,5 +87,26 @@ public class StorageProductService implements ProductService {
         }
         else //if product id is not present
             return false;
+    }
+
+    @Override
+    public Product getProductByUserRole(Long productId, Long userId) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()){
+            //call user service api to get userdto by userid
+            ResponseEntity<UserDto> responseEntity = restTemplate.getForEntity(
+                    "http://userservice/users/userId",
+                    UserDto.class,userId
+            );
+
+            UserDto userDto = responseEntity.getBody();
+            if (userDto.getRoles() != null && userDto.getRoles().stream()
+                    .anyMatch(role -> role.getRoleName().equalsIgnoreCase("admin"))){
+                return optionalProduct.get();
+            }
+            else return null;
+        }
+        else throw new ProductNotFoundException("Product with this id not found",productId);
+
     }
 }

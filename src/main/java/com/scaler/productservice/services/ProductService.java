@@ -6,6 +6,7 @@ import com.scaler.productservice.exceptions.ProductNotFoundException;
 import com.scaler.productservice.models.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -14,4 +15,5 @@ public interface ProductService {
     Product createProduct(CreateProductRequestDto createProductRequestDto) throws BadCreateProductRequestException;
     Product updateProduct(long productId, Product product);
     boolean deleteProduct(long productId);
+    Product getProductByUserRole(Long productId, Long userId) throws ProductNotFoundException;
 }

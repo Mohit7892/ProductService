@@ -79,4 +79,11 @@ public class ProductController {
     public boolean deleteProduct(@PathVariable("productId") long productId) {
        return productService.deleteProduct(productId);
     }
+
+    @GetMapping("/{productId}/{userId}")
+    public ResponseEntity<Product> getProductByUserRole(
+            @PathVariable Long productId, @PathVariable Long userId) {
+
+        return null;
+    }
 }
