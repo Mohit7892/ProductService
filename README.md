@@ -4,13 +4,13 @@
    The ProductService project is a microservice designed to manage product catalog operations within an E-commerce ecosystem. It provides RESTful APIs for product creation, retrieval, updating, and deletion, forming the backbone of catalog management in a distributed architecture. This repository is part of a larger thesis project exploring scalable microservices for modern E-commerce platforms.
    
 3. Objectives:
-   1.	Centralized Product Management Provide a unified service for handling product data across multiple applications and industries.
-2.	Scalability & Flexibility Utilize Spring Boot’s microservice architecture to support distributed deployments and cloud-native environments.
-3.	Database Integration Ensure reliable storage and retrieval of product information using JPA/Hibernate with relational databases.
-4.	Interoperability Offer RESTful APIs that can be consumed by diverse systems, enabling seamless integration.
-5.	Operational Efficiency Automate catalog workflows, reduce manual errors, and enable real-time synchronization of product data.
+   a.	Centralized Product Management Provide a unified service for handling product data across multiple applications and industries.
+   b.	Scalability & Flexibility Utilize Spring Boot’s microservice architecture to support distributed deployments and             cloud-native environments.
+   c.	Database Integration Ensure reliable storage and retrieval of product information using JPA/Hibernate with relational       databases.
+   d.	Interoperability Offer RESTful APIs that can be consumed by diverse systems, enabling seamless integration.
+   e.	Operational Efficiency Automate catalog workflows, reduce manual errors, and enable real-time synchronization of             product data.
 
-5. Features:
+4. Features:
    CRUD Operations: Create, Read, Update, Delete products.
 
    RESTful API Endpoints: JSON-based communication for interoperability.
@@ -27,7 +27,7 @@
 
    Extensibility: Can be integrated with services like OrderService, InventoryService, and PaymentService.
    
-7. Tech Stack:
+5. Tech Stack:
 Spring Boot	--> Build REST APIs & microservices
 MySQL	Store --> product catalog data
 Kafka	--> Event-driven communication
@@ -36,7 +36,7 @@ AWS Cloud --> 	Deployment & scaling
 RDS -->	Managed relational database
 Elastic Cache -->	Caching search results
 
-8. Installation and set up : 
+6. Installation and set up : 
    a. Java and Maven should be installed on the system.
    b. An IDE like Intellij or Eclispe should be installed.
    c. Clone the repo : git clone https://github.com/Mohit7892/ProductService.git
@@ -48,7 +48,7 @@ Elastic Cache -->	Caching search results
                        mvn spring-boot:run
 
 
-10. API Endpoints : Base URL --> http://localhost:8080
+7. API Endpoints : Base URL --> http://localhost:8080
 
 | Method | Endpoint                      | Description                            |
 | ---    | ---                           | ---                                    |
